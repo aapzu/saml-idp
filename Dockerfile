@@ -1,4 +1,4 @@
-FROM node:18-alpine3.17
+FROM node:24.4.1-alpine3.21
 
 EXPOSE 7000
 
@@ -10,6 +10,10 @@ COPY . /application
 WORKDIR /application
 
 RUN \
-  yarn
+  corepack enable && \
+  corepack prepare pnpm@10.13.1 --activate
+
+RUN \
+  pnpm install --frozen-lockfile
 
 ENTRYPOINT [ "/application/scripts/entrypoint.sh" ]
